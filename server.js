@@ -56,6 +56,12 @@ app.get('/api/scrape', async (req, res) => {
     }
 });
 
+// Middleware to handle global errors
+app.use((err, req, res, next) => {
+    console.error('Global error handler:', err);
+    res.status(500).json({ error: 'Internal server error.' });
+});
+
 // Starting the server on the specified port
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
