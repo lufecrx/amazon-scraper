@@ -49,7 +49,7 @@ app.get('/api/scrape', async (req, res) => {
             const imageUrl = imageElement ? imageElement.getAttribute('src') : null;
 
             // Adding product data to the array
-            if (title && rating && reviews && imageUrl) {
+            if (title && reviews && imageUrl) {
                 productData.push({ title, rating, reviews, imageUrl });
             }
         });

@@ -1,5 +1,10 @@
 // Adding an event listener for click on the "Scrape" button
 document.getElementById('scrapeBtn').addEventListener('click', async () => {
+    
+    // Clearing the results
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '';
+
     try {
         // Showing a loading spinner while the request is being processed
         document.getElementById('loading').style.display = 'block';
@@ -27,10 +32,10 @@ document.getElementById('scrapeBtn').addEventListener('click', async () => {
             // Creating HTML elements to display product details
             const productDiv = document.createElement('div');
             productDiv.innerHTML = `
-              <h3>${product.title}</h3>
-              <p>Rating: ${product.rating ? product.rating.toFixed(1) : 'N/A'}</p>
-              <p>Reviews: ${product.reviews}</p>
-              <img src="${product.imageUrl}" alt="${product.title}" width="100">
+            <h3 class="product-title">${product.title}</h3>
+            <p class="product-rating">Rating: ${product.rating ? product.rating.toFixed(1) : 'N/A'}</p>
+            <p class="product-reviews">Reviews: ${product.reviews}</p>
+            <img class="product-image" src="${product.imageUrl}" alt="${product.title}" width="100">
           `;
             // Adding the product element to the results container
             resultsDiv.appendChild(productDiv);

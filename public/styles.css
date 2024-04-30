@@ -57,3 +57,23 @@ button:hover {
     transform: rotate(360deg);
   }
 }
+
+.product {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.product-title {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.product-rating, .product-reviews {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.product-image {
+  margin-top: 10px;
+}
