@@ -2,10 +2,12 @@
 const express = require('express');
 const axios = require('axios');
 const { JSDOM } = require('jsdom');
+const path = require('path'); // Importing the 'path' module to handle file paths
 
 // Initializing Express application
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(express.static(path.join(__dirname, 'public'))); // Serving static files from the 'public' directory
 
 // Endpoint to scrape Amazon products
 app.get('/api/scrape', async (req, res) => {
@@ -15,8 +17,11 @@ app.get('/api/scrape', async (req, res) => {
         // Constructing the Amazon search URL
         const amazonUrl = `https://www.amazon.com/s?k=${keyword}`;
         // Making an HTTP GET request to the Amazon search URL
-        const response = await axios.get(amazonUrl);
-        // Creating an HTML document from the response content
+        const response = await axios.get(amazonUrl, {
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+            }
+        });        // Creating an HTML document from the response content
         const dom = new JSDOM(response.data);
 
         // Selecting all search result items
@@ -52,7 +57,7 @@ app.get('/api/scrape', async (req, res) => {
     } catch (error) {
         // Handling errors and sending an error response in case of scraping failure
         console.error('Error occurred:', error);
-        res.status(500).json({ error: 'An error occurred while scraping Amazon.' });
+        res.status(500).json({ error: 'An error occurred while scraping Amazon: ' + error.message});
     }
 });
 
