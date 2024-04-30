@@ -34,7 +34,7 @@ app.get('/api/scrape', async (req, res) => {
         products.forEach(product => {
             // Extracting product title
             const titleElement = product.querySelector('h2');
-            const title = titleElement.textContent.trim();
+            const title = titleElement ? titleElement.textContent.trim() : null;
 
             // Extracting product rating (out of five stars)
             const ratingElement = product.querySelector('.a-icon-star-small');
@@ -49,7 +49,9 @@ app.get('/api/scrape', async (req, res) => {
             const imageUrl = imageElement ? imageElement.getAttribute('src') : null;
 
             // Adding product data to the array
-            productData.push({ title, rating, reviews, imageUrl });
+            if (title && rating && reviews && imageUrl) {
+                productData.push({ title, rating, reviews, imageUrl });
+            }
         });
 
         // Sending product data as the response of the request
@@ -57,7 +59,7 @@ app.get('/api/scrape', async (req, res) => {
     } catch (error) {
         // Handling errors and sending an error response in case of scraping failure
         console.error('Error occurred:', error);
-        res.status(500).json({ error: 'An error occurred while scraping Amazon: ' + error.message});
+        res.status(500).json({ error: 'An error occurred while scraping Amazon: ' + error.message });
     }
 });
 
